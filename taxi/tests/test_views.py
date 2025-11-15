@@ -10,7 +10,8 @@ MANUFACTURER_URL = reverse("taxi:manufacturer-list")
 class PublicManufacturer(TestCase):
     def test_login_required(self):
         res = self.client.get(MANUFACTURER_URL)
-        self.assertNotEqual(res.status_code, 200)
+        self.assertEqual(res.status_code, 302)
+        self.assertIn("/login/", res.url)
 
 
 class PrivateManufacturer(TestCase):
@@ -21,7 +22,7 @@ class PrivateManufacturer(TestCase):
         )
         self.client.force_login(self.user)
 
-    def test_retrieve_literary_formats(self):
+    def test_retrieve_manufacturers(self):
         Manufacturer.objects.create(name="drama")
         Manufacturer.objects.create(name="poetry")
         response = self.client.get(MANUFACTURER_URL)

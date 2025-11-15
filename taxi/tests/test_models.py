@@ -9,7 +9,7 @@ class ModelsTests(TestCase):
         manufacturer = Manufacturer.objects.create(name="test", country="Test")
         self.assertEqual(str(manufacturer), f"{manufacturer.name} {manufacturer.country}")
 
-    def test_author_str(self):
+    def test_driver_str(self):
         driver = get_user_model().objects.create(
             username='test',
             password='test123',
@@ -21,7 +21,7 @@ class ModelsTests(TestCase):
      f"{driver.username} ({driver.first_name} {driver.last_name})"
         )
 
-    def test_book_str(self):
+    def test_car_str(self):
         manufacturer = Manufacturer.objects.create(name="test", country="Test")
         car = Car.objects.create(model='test', manufacturer=manufacturer)
         self.assertEqual(

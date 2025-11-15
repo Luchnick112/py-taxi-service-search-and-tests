@@ -50,7 +50,7 @@ class ManufacturerListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = Manufacturer.objects.all()
+        queryset = super().get_queryset()
         form = ManufacturerSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(name__icontains=form.cleaned_data["name"])
@@ -91,7 +91,7 @@ class CarListView(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self):
-        queryset = Car.objects.select_related("manufacturer")
+        queryset = super().get_queryset().select_related("manufacturer")
         form = CarSearchForm(self.request.GET)
         if form.is_valid():
             return queryset.filter(model__icontains=form.cleaned_data["model"])
@@ -160,7 +160,7 @@ class DriverLicenseUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 class DriverDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Driver
-    success_url = reverse_lazy("")
+    success_url = reverse_lazy("taxi:driver-list")
 
 
 @login_required
