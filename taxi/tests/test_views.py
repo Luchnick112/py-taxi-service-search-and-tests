@@ -73,7 +73,10 @@ class DriverSearchTests(TestCase):
         )
 
     def test_search_driver_by_username(self):
-        response = self.client.get(reverse("taxi:driver-list"), {"username": "john"})
+        response = self.client.get(
+            reverse("taxi:driver-list"),
+            {"username": "john"}
+        )
         self.assertContains(response, "john_doe")
         self.assertNotContains(response, "jane_smith")
 
@@ -84,12 +87,18 @@ class CarSearchTests(TestCase):
             username="search_user", password="pass123"
         )
         self.client.force_login(self.user)
-        manufacturer = Manufacturer.objects.create(name="Toyota", country="Japan")
+        manufacturer = Manufacturer.objects.create(
+            name="Toyota",
+            country="Japan"
+        )
         Car.objects.create(model="Corolla", manufacturer=manufacturer)
         Car.objects.create(model="Camry", manufacturer=manufacturer)
 
     def test_search_car_by_model(self):
-        response = self.client.get(reverse("taxi:car-list"), {"model": "rolla"})
+        response = self.client.get(
+            reverse("taxi:car-list"),
+            {"model": "rolla"}
+        )
         self.assertContains(response, "Corolla")
         self.assertNotContains(response, "Camry")
 
@@ -104,6 +113,9 @@ class ManufacturerSearchTests(TestCase):
         Manufacturer.objects.create(name="Audi", country="Germany")
 
     def test_search_manufacturer_by_name(self):
-        response = self.client.get(reverse("taxi:manufacturer-list"), {"name": "bmw"})
+        response = self.client.get(
+            reverse("taxi:manufacturer-list"),
+            {"name": "bmw"}
+        )
         self.assertContains(response, "BMW")
         self.assertNotContains(response, "Audi")
